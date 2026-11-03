@@ -130,12 +130,12 @@ def page(path, title, body, active="", desc="", crumbs=None, h1=None, bar=True):
 <link rel="icon" href="{r}assets/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Biryani:wght@300;400;600;700;800&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{r}assets/css/style.css"></head>
+<link rel="stylesheet" href="{r}assets/css/style.css"><link rel="stylesheet" href="{r}assets/css/anim.css"><script>document.documentElement.classList.add("js")</script></head>
 <body data-root="{r}">
 {top}{header}
 <main>{crumb_html}{body}</main>
 {footer(r)}{extra}
-<script src="{r}assets/js/data.js"></script><script src="{r}assets/js/main.js"></script>
+<script src="{r}assets/js/data.js"></script><script src="{r}assets/js/main.js"></script><script src="{r}assets/js/anim.js"></script>
 </body></html>'''
     fp = os.path.join(OUT, path); os.makedirs(os.path.dirname(fp), exist_ok=True)
     open(fp, "w", encoding="utf-8").write(doc)

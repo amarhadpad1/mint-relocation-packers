@@ -1,0 +1,147 @@
+/* MINT RELOCATION — motion layer. Remove the two tags in build.py's page() (and rebuild) to switch off. */
+
+/* ===== page enter + scroll progress ===== */
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+body{animation:pageIn .6s both}
+.scroll-progress{position:fixed;top:0;left:0;height:4px;width:100%;background:linear-gradient(90deg,#ffdc39,#ff9d00);transform-origin:0 50%;transform:scaleX(0);z-index:9999;pointer-events:none;box-shadow:0 0 10px rgba(255,200,0,.7)}
+
+/* ===== keyframes ===== */
+@keyframes riseIn{from{opacity:0;translate:0 38px}to{opacity:1;translate:0 0}}
+@keyframes slideRight{from{opacity:0;translate:90px 0;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+@keyframes growBlock{from{scale:0}to{scale:1}}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@keyframes spin{to{rotate:360deg}}
+@keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(255,200,0,.75)}100%{box-shadow:0 0 0 18px rgba(255,200,0,0)}}
+@keyframes ringPulseG{0%{box-shadow:0 0 0 0 rgba(37,211,102,.7)}100%{box-shadow:0 0 0 16px rgba(37,211,102,0)}}
+@keyframes stripes{to{background-position:72px 0}}
+@keyframes wiggle{0%,100%{rotate:0deg}25%{rotate:-12deg}75%{rotate:12deg}}
+@keyframes hl{to{background-size:100% 100%}}
+
+/* ===== header / logo / buttons ===== */
+.logo img{transition:rotate .5s cubic-bezier(.3,1.6,.5,1),scale .4s}
+.logo:hover img{rotate:-4deg;scale:1.07}
+.hdr-right .btn,.hero .cta .btn:not(.line){animation:ringPulse 2.2s ease-out infinite}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .7s;pointer-events:none}
+.btn:hover::after{left:140%}
+.btn svg{transition:transform .3s}
+.btn:hover svg{transform:rotate(-14deg) scale(1.15)}
+.floatc .w{animation:ringPulseG 2s ease-out infinite}
+.floatc .c{animation:ringPulse 2s 1s ease-out infinite}
+.totop.on svg{animation:bob 1.6s ease-in-out infinite}
+
+/* ===== HOME hero ===== */
+.hero{position:relative}
+.hero .container{position:relative;z-index:1}
+.hero .eyebrow{animation:riseIn .8s .1s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{animation:riseIn .9s .25s cubic-bezier(.2,.7,.2,1) both}
+.hero p{animation:riseIn .9s .45s cubic-bezier(.2,.7,.2,1) both}
+.hero .cta{animation:riseIn .9s .65s cubic-bezier(.2,.7,.2,1) both}
+.hero .tags span{animation:riseIn .8s both}
+.hero .tags span:nth-child(1){animation-delay:.9s}.hero .tags span:nth-child(2){animation-delay:1.05s}.hero .tags span:nth-child(3){animation-delay:1.2s}
+.hero .ph{animation:slideRight 1.1s .3s cubic-bezier(.2,.7,.2,1) both;will-change:transform}
+.hero .ph:before{transform-origin:100% 100%;animation:growBlock .9s .9s cubic-bezier(.3,1.4,.5,1) both}
+.hero .ph img,.split .ph img{animation:bob 6s ease-in-out infinite}
+.split .ph img{animation-duration:7.5s}
+.hero h1 b .hl{background:linear-gradient(transparent 62%,rgba(255,220,57,.9) 62%) no-repeat left bottom;background-size:0 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:hl 1.1s 1.2s cubic-bezier(.6,0,.2,1) forwards}
+
+/* floating badges on the hero photo */
+.hchip{position:absolute;z-index:3;background:#fff;color:var(--dark);font-family:"Biryani",Arial,sans-serif;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.3px;padding:11px 16px;box-shadow:0 14px 30px rgba(0,0,0,.18);border-left:5px solid var(--y);animation:bob 4.5s ease-in-out infinite;white-space:nowrap}
+.hchip i{font-style:normal;color:var(--yd);margin-right:6px}
+.hchip.a{top:18px;left:-26px}
+.hchip.b{bottom:34px;left:-34px;animation-delay:-1.5s;background:var(--dark);color:#fff}
+.hchip.c{top:44%;right:-14px;animation-delay:-3s}
+@media (max-width:900px){.hchip.a{left:8px}.hchip.b{left:8px}.hchip.c{right:8px}}
+
+/* drifting shapes behind hero text */
+.hero-fx{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.shape{position:absolute;display:block;animation:shapeFloat var(--t,9s) ease-in-out infinite;translate:calc(var(--mx,0) * var(--k,10) * 1px) calc(var(--my,0) * var(--k,10) * 1px);transition:translate .25s ease-out}
+.shape.sq{width:var(--s,40px);height:var(--s,40px);border:3px solid rgba(255,200,0,.55)}
+.shape.fill{width:var(--s,22px);height:var(--s,22px);background:rgba(255,220,57,.75)}
+.shape.dot{width:var(--s,16px);height:var(--s,16px);border-radius:50%;background:rgba(27,32,36,.14)}
+.shape.box{width:var(--s,54px);height:var(--s,54px);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6 58 18v28L32 58 6 46V18z' fill='%23d9a441'/%3E%3Cpath d='M32 6 58 18 32 30 6 18z' fill='%23eec06a'/%3E%3Cpath d='M32 30v28' stroke='%23b4802a' stroke-width='2'/%3E%3Cpath d='M20 12l26 12v8' stroke='%23fff3c4' stroke-width='3' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12))}
+@keyframes shapeFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-26px) rotate(var(--r,20deg))}}
+
+/* ===== truck road strip (home) ===== */
+.roadstrip{position:relative;height:150px;overflow:hidden;background:linear-gradient(#f2f2f2,#fff 70%)}
+.roadstrip .sun{position:absolute;right:9%;top:36px;width:46px;height:46px;border-radius:50%;background:#ffdc39;box-shadow:0 0 0 10px rgba(255,220,57,.25),0 0 0 22px rgba(255,220,57,.12);animation:sunPulse 3.5s ease-in-out infinite}
+@keyframes sunPulse{0%,100%{scale:1}50%{scale:1.12}}
+.roadstrip .cloud{position:absolute;height:14px;width:70px;border-radius:20px;background:#e4e4e4;animation:cloud var(--t,40s) linear infinite;top:var(--y,30px);left:0}
+.roadstrip .cloud:before{content:"";position:absolute;left:14px;top:-9px;width:30px;height:20px;border-radius:50%;background:inherit}
+@keyframes cloud{from{translate:-120px 0}to{translate:calc(100vw + 120px) 0}}
+.roadstrip .road{position:absolute;left:0;right:0;bottom:0;height:38px;background:#1b2024}
+.roadstrip .road:before{content:"";position:absolute;left:0;right:0;top:17px;height:4px;background:repeating-linear-gradient(90deg,#ffdc39 0 36px,transparent 36px 72px);background-size:72px 4px;animation:roadMove .55s linear infinite}
+@keyframes roadMove{to{background-position:-72px 0}}
+.roadstrip .road:after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:#ffdc39}
+.truckwrap{position:absolute;bottom:31px;left:0;width:260px;animation:drive 11s cubic-bezier(.45,.05,.4,1) infinite;will-change:transform}
+@keyframes drive{0%{transform:translateX(-300px)}100%{transform:translateX(calc(100vw + 40px))}}
+.truck{display:block;width:100%;height:auto;animation:bump .45s ease-in-out infinite}
+@keyframes bump{0%,100%{translate:0 0}50%{translate:0 -2.5px}}
+.truck .wheel{transform-box:fill-box;transform-origin:center;animation:spin .5s linear infinite}
+.truck .puff{transform-box:fill-box;transform-origin:center;animation:puff 1.1s ease-out infinite;opacity:0}
+.truck .puff.p2{animation-delay:.37s}.truck .puff.p3{animation-delay:.74s}
+@keyframes puff{0%{opacity:.7;translate:0 0;scale:.5}100%{opacity:0;translate:-34px -22px;scale:1.8}}
+.truck .speed{animation:speed .5s linear infinite}
+.truck .speed.s2{animation-delay:.17s}.truck .speed.s3{animation-delay:.33s}
+@keyframes speed{0%{opacity:0;translate:14px 0}40%{opacity:.8}100%{opacity:0;translate:-26px 0}}
+
+/* ===== ticker ===== */
+.ticker{background:var(--dark);color:#fff;overflow:hidden;border-top:4px solid var(--y);border-bottom:4px solid var(--y);padding:18px 0;white-space:nowrap}
+.ticker .track{display:inline-flex;animation:tick 32s linear infinite;will-change:transform}
+.ticker:hover .track{animation-play-state:paused}
+.ticker span{font-family:"Biryani",Arial,sans-serif;font-weight:800;text-transform:uppercase;font-size:22px;letter-spacing:1px;padding:0 26px;display:inline-flex;align-items:center;gap:52px}
+.ticker span:after{content:"✦";color:var(--y);animation:spin 5s linear infinite;display:inline-block}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ===== reveal on scroll ===== */
+.js .reveal{opacity:0;translate:0 46px;transition:opacity .85s cubic-bezier(.2,.7,.2,1),translate .85s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+@media (min-width:901px){.js .reveal.left{translate:-60px 0}.js .reveal.right{translate:60px 0}}
+.js .reveal.pop{translate:0 0;scale:.88;transition:opacity .7s,scale .7s cubic-bezier(.3,1.5,.5,1);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;translate:0 0;scale:1}
+
+/* ===== inner-page title bars + CTA band + counters: moving stripes ===== */
+.titlebar,.band,.counters{position:relative;overflow:hidden}
+.titlebar:before,.band:before,.counters:before{content:"";position:absolute;inset:0;pointer-events:none;background-size:72px 72px;animation:stripes 3.5s linear infinite}
+.titlebar:before{background-image:repeating-linear-gradient(135deg,transparent 0 24px,rgba(255,220,57,.22) 24px 48px)}
+.band:before{background-image:repeating-linear-gradient(135deg,transparent 0 24px,rgba(0,0,0,.045) 24px 48px)}
+.counters:before{background-image:repeating-linear-gradient(135deg,transparent 0 24px,rgba(255,255,255,.03) 24px 48px)}
+.titlebar>*,.band>*,.counters>*{position:relative;z-index:1}
+.titlebar h1{position:relative;display:inline-block;animation:riseIn .8s .1s cubic-bezier(.2,.7,.2,1) both}
+.titlebar h1:after{content:"";position:absolute;left:0;bottom:-8px;height:5px;width:100%;background:var(--y);transform-origin:0 50%;animation:barGrow .9s .5s cubic-bezier(.6,0,.2,1) both}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.titlebar .crumbs{animation:riseIn .8s .3s both}
+.band .btn{animation:ringPulse 2.4s ease-out infinite}
+.counters .n{text-shadow:0 0 30px rgba(255,220,57,.35)}
+.counters .grid>div{transition:transform .3s}
+.counters .grid>div:hover{transform:scale(1.07)}
+
+/* ===== cards ===== */
+.svc,.step,.off{position:relative;overflow:hidden}
+.svc:before,.step:before,.off:before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--y);transform:scaleX(0);transform-origin:0 50%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.svc:hover:before,.step:hover:before,.off:hover:before{transform:scaleX(1)}
+.svc:hover .ico{animation:wiggle .7s}
+.svc .ico{transition:background .3s,color .3s,scale .3s}
+.svc:hover .ico{background:var(--dark);color:var(--y);scale:1.08}
+.step .no{transition:color .3s,scale .3s}
+.step:hover .no{color:var(--y);scale:1.25}
+.off{transition:transform .3s,box-shadow .3s}
+.off:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(0,0,0,.1)}
+.svc .more{position:relative;transition:letter-spacing .3s}
+.svc:hover .more{letter-spacing:1.2px}
+.proj{transition:transform .3s,box-shadow .3s}
+.proj:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.tick li{transition:translate .3s}
+.tick li:hover{translate:6px 0}
+
+/* ===== forms ===== */
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--yd)!important;box-shadow:0 0 0 4px rgba(255,220,57,.45);transition:box-shadow .25s}
+
+/* ===== never create sideways scroll ===== */
+html,body{overflow-x:clip}
+
+/* ===== reduce motion ===== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1!important;translate:0 0!important;scale:1!important}
+  .truckwrap{left:20%}
+}
